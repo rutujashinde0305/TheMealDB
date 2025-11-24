@@ -44,6 +44,22 @@ export const mealService = {
     return (up && up.meals) ? up.meals : [];
   },
 
+  async getAreas() {
+    const local = await tryFetchJson(`${API_BASE_URL}/areas`, { headers });
+    if (local && local.meals) return local.meals;
+
+    const up = await tryFetchJson(`${UPSTREAM_BASE}/list.php?a=list`);
+    return (up && up.meals) ? up.meals : [];
+  },
+
+  async getMealsByArea(area) {
+    const local = await tryFetchJson(`${API_BASE_URL}/filterByArea?a=${encodeURIComponent(area)}`, { headers });
+    if (local && local.meals) return local.meals;
+
+    const up = await tryFetchJson(`${UPSTREAM_BASE}/filter.php?a=${encodeURIComponent(area)}`);
+    return (up && up.meals) ? up.meals : [];
+  },
+
   async getRandomMeal() {
     const local = await tryFetchJson(`${API_BASE_URL}/random`, { headers });
     if (local && local.meals) return local.meals[0] || null;
