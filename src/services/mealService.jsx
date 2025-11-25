@@ -20,7 +20,6 @@ async function tryFetchJson(url, options) {
 
 export const mealService = {
   async searchMeals(query) {
-    // Try local API first, fall back to upstream
     const local = await tryFetchJson(`${API_BASE_URL}/search?s=${encodeURIComponent(query)}`, { headers });
     if (local && local.meals) return local.meals;
 

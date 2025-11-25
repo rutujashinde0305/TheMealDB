@@ -21,7 +21,6 @@ export function AuthModal({ mode = 'login', onClose, onSubmit }) {
 
       <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden">
         <div className="flex">
-          {/* Left panel: visual / brand */}
           <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-red-500 to-red-600 p-8 items-center justify-center">
             <div className="text-white text-center">
               <div className="mx-auto mb-4 w-20 h-20 rounded-full bg-white/20 flex items-center justify-center">
@@ -32,7 +31,6 @@ export function AuthModal({ mode = 'login', onClose, onSubmit }) {
             </div>
           </div>
 
-          {/* Right panel: form */}
           <div className="w-full md:w-1/2 p-8">
             <div className="flex items-start justify-between">
               <div>

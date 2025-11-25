@@ -121,12 +121,10 @@ function App() {
     setCurrentCategory('');
   };
 
-  // Landing / hero state
   const [showLanding, setShowLanding] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  
-  // Auth state (dummy)
+
   const [currentUser, setCurrentUser] = useState(null);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -135,20 +133,17 @@ function App() {
   const [registerPassword, setRegisterPassword] = useState('');
   const [authMessage, setAuthMessage] = useState('');
 
-  // Dummy auth handlers
   const handleLogin = (e) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword) {
       setAuthMessage('Please fill in all fields');
       return;
     }
-    // Dummy auth: accept any email/password
     setCurrentUser({ email: loginEmail, name: 'User' });
     setAuthMessage(`Welcome back, ${loginEmail}!`);
     setLoginEmail('');
     setLoginPassword('');
     setShowLogin(false);
-    // Navigate to browse page
     setShowLanding(false);
     setViewMode('home');
   };
@@ -159,14 +154,12 @@ function App() {
       setAuthMessage('Please fill in all fields');
       return;
     }
-    // Dummy auth: create user
     setCurrentUser({ email: registerEmail, name: registerName });
     setAuthMessage(`Welcome, ${registerName}! Account created.`);
     setRegisterName('');
     setRegisterEmail('');
     setRegisterPassword('');
     setShowRegister(false);
-    // Navigate to browse page
     setShowLanding(false);
     setViewMode('home');
   };
@@ -179,7 +172,6 @@ function App() {
     setTimeout(() => setAuthMessage(''), 3000);
   };
 
-  // Render the app (landing shown first)
   return (
     <div>
       {showLanding ? (
@@ -191,7 +183,6 @@ function App() {
             authMessage={authMessage}
           />
 
-          {/* Login Modal */}
           {showLogin && (
             <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
               <div className="bg-white rounded-lg shadow-2xl w-full max-w-md p-8">
@@ -229,7 +220,6 @@ function App() {
             </div>
           )}
 
-          {/* Register Modal */}
           {showRegister && (
             <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
               <div className="bg-white rounded-lg shadow-2xl w-full max-w-md p-8">

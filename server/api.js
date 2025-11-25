@@ -1,20 +1,16 @@
 /* eslint-env node */
 /* eslint-disable no-undef */
-// Simple Express API proxy for TheMealDB with in-memory LRU cache
-// Run: node server/api.js
 
 import express from 'express';
 import { LRUCache } from 'lru-cache';
 import { createClient as createRedisClient } from 'redis';
 
 const app = express();
-const PORT = process.env.PORT || 5176; // separate port from Vite (use 5176)
+const PORT = process.env.PORT || 5176;
 
-// Use test key '1' for TheMealDB
 const THEMEALDB_API = 'https://www.themealdb.com/api/json/v1/1';
 
-// Cache options: TTL and max size
-const CACHE_TTL = process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL = process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 5 * 60 * 1000;
 const MAX_CACHE_SIZE = process.env.MAX_CACHE_SIZE ? Number(process.env.MAX_CACHE_SIZE) : 1000;
 
 const cache = new LRUCache({
@@ -22,11 +18,9 @@ const cache = new LRUCache({
   ttl: CACHE_TTL,
 });
 
-// simple stats
 let cacheHits = 0;
 let cacheMisses = 0;
 
-// Optional Redis client (used when REDIS_URL is provided)
 let redisClient = null;
 const useRedis = Boolean(process.env.REDIS_URL);
 
@@ -45,9 +39,7 @@ async function initRedis() {
   }
 }
 
-// Fetch helper (uses redisClient if available and falls back to in-memory cache)
 async function fetchAndCache(key, url) {
-  // Try Redis first
   if (redisClient) {
     try {
       const raw = await redisClient.get(key);
@@ -57,27 +49,22 @@ async function fetchAndCache(key, url) {
       }
     } catch (err) {
       console.error('Redis get error', err);
-      // fall through to in-memory / fetch
     }
   }
 
-  // Check in-memory cache
   const cached = cache.get(key);
   if (cached) {
     cacheHits += 1;
     return cached;
   }
 
-  // Miss: fetch from upstream
   cacheMisses += 1;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Upstream error ${res.status}`);
   const data = await res.json();
 
-  // Store in-memory cache
   cache.set(key, data);
 
-  // Also store in Redis if available (use TTL in seconds)
   if (redisClient) {
     try {
       const ttlSeconds = Math.max(1, Math.floor(CACHE_TTL / 1000));
@@ -94,7 +81,6 @@ async function fetchAndCache(key, url) {
   return data;
 }
 
-// Endpoints
 app.get('/api/search', async (req, res) => {
   try {
     const q = req.query.s || '';
@@ -133,7 +119,6 @@ app.get('/api/filter', async (req, res) => {
   }
 });
 
-// Areas (cuisines)
 app.get('/api/areas', async (req, res) => {
   try {
     const key = 'areas:all';
@@ -161,7 +146,7 @@ app.get('/api/filterByArea', async (req, res) => {
 
 app.get('/api/random', async (req, res) => {
   try {
-    const key = `random:${new Date().toISOString().slice(0,16)}`; // purposely short-lived key for randomness
+    const key = `random:${new Date().toISOString().slice(0,16)}`;
     const url = `${THEMEALDB_API}/random.php`;
     const data = await fetchAndCache(key, url);
     res.json(data);
@@ -184,12 +169,10 @@ app.get('/api/lookup', async (req, res) => {
   }
 });
 
-// Health
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, cacheSize: cache.size, usingRedis: Boolean(redisClient), cacheHits, cacheMisses });
 });
 
-// Initialize Redis (if configured), then start
 initRedis()
   .then(() => {
     app.listen(PORT, () => {
@@ -199,7 +182,6 @@ initRedis()
   })
   .catch((err) => {
     console.error('Error initializing cache adapters:', err);
-    // Still start the server with in-memory cache
     app.listen(PORT, () => {
       console.log(`API proxy listening on http://localhost:${PORT} (no Redis)`);
       console.log(`Cache TTL: ${CACHE_TTL}ms, max size: ${MAX_CACHE_SIZE}`);

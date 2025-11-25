@@ -22,7 +22,7 @@ export async function mealsAPI(req, res) {
     const path = url.pathname.replace("/meals-api/", "");
     const searchParams = url.searchParams;
 
-  let apiUrl = "";
+    let apiUrl = "";
     let cacheKey = "";
 
     if (path === "search") {
@@ -47,7 +47,6 @@ export async function mealsAPI(req, res) {
       return res.status(400).json({ error: "Invalid endpoint" });
     }
 
-    
     if (path !== "random") {
       const { data: cached } = await supabase
         .from("meal_cache")
@@ -62,11 +61,8 @@ export async function mealsAPI(req, res) {
       }
     }
 
-    
     const response = await fetch(apiUrl);
     const data = await response.json();
-
-    
     if (path !== "random") {
       const expiresAt = new Date(Date.now() + CACHE_TTL).toISOString();
 

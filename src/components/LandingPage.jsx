@@ -1,28 +1,14 @@
 import React from 'react';
 import { ChefHat, Search, Globe, Zap, ArrowRight } from 'lucide-react';
 
-/**
- * @typedef {Object} LandingPageProps
- * @property {() => void} onExplore - Callback when user clicks Explore
- * @property {() => void} onLogin - Callback when user clicks Login
- * @property {() => void} onRegister - Callback when user clicks Register
- * @property {string} [authMessage] - Success/error message from authentication
- */
-
-/**
- * LandingPage - Professional landing page with hero, features, and CTA
- * @param {LandingPageProps} props
- */
 export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
   return (
     <div className="min-h-screen bg-white overflow-hidden">
-      {/* Auth Success Message */}
       {authMessage && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded-lg shadow-lg animate-pulse">
           {authMessage}
         </div>
       )}
-      {/* Header Navigation */}
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -52,9 +38,7 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
             </button>
           </div>
         </div>
-      </header>
-
-      {/* Hero Section */}
+      </header>      {/* Hero Section */}
       <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-red-50 via-white to-orange-50">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
@@ -93,7 +77,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -106,7 +89,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
             <div className="bg-gradient-to-br from-red-50 to-white border border-red-100 rounded-2xl p-8 hover:shadow-xl transition">
               <div className="bg-red-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <Search className="text-white" size={24} />
@@ -117,7 +99,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
               </p>
             </div>
 
-            {/* Feature 2 */}
             <div className="bg-gradient-to-br from-orange-50 to-white border border-orange-100 rounded-2xl p-8 hover:shadow-xl transition">
               <div className="bg-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <Globe className="text-white" size={24} />
@@ -128,7 +109,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
               </p>
             </div>
 
-            {/* Feature 3 */}
             <div className="bg-gradient-to-br from-red-50 to-white border border-red-100 rounded-2xl p-8 hover:shadow-xl transition">
               <div className="bg-red-600 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <Zap className="text-white" size={24} />
@@ -142,7 +122,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -170,7 +149,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-red-500 to-red-600">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -196,7 +174,6 @@ export function LandingPage({ onExplore, onLogin, onRegister, authMessage }) {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-900 text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
