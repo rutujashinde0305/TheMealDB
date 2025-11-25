@@ -99,34 +99,34 @@ Below are screenshots showing the app UI. These use the images in `public/screen
 
 - Hero / Landing view
 
-![Hero Screenshot](public/screenshots/hero.png.png)
+![Hero Screenshot](public/screenshots/hero.png)
 
 - Browse / Categories view
 
-![Browse Screenshot](public/screenshots/Browse.png.png)
+![Browse Screenshot](public/screenshots/Browse.png)
 
 - Category detail view
 
-![Category Food](public/screenshots/categoryfood.png.png)
+![Category Food](public/screenshots/categoryfood.png)
 
 - Search results
 
-![Search Food](public/screenshots/searchfood.png.png)
+![Search Food](public/screenshots/searchfood.png)
 
 - Search by area
 
-![Search by Area](public/screenshots/Searchfoodbyarea.png.png)
+![Search by Area](public/screenshots/Searchfoodbyarea.png)
 
 - Recipe detail
 
-![Recipe Detail](public/screenshots/recipe.png.png)
+![Recipe Detail](public/screenshots/recipe.png)
 
 - Random / I'm Feeling Hungry
 
-![Random Recipe](public/screenshots/imhungryrandomrecipe.png.png)
+![Random Recipe](public/screenshots/imhungryrandomrecipe.png)
 
 - Video / YouTube embed
 
-![YouTube](public/screenshots/youtube.png.png)
+![YouTube](public/screenshots/youtube.png)
 
 **Status:** Ready for Submission ✅
