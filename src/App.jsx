@@ -148,7 +148,9 @@ function App() {
     setLoginEmail('');
     setLoginPassword('');
     setShowLogin(false);
-    setTimeout(() => setAuthMessage(''), 3000);
+    // Navigate to browse page
+    setShowLanding(false);
+    setViewMode('home');
   };
 
   const handleRegister = (e) => {
@@ -164,7 +166,9 @@ function App() {
     setRegisterEmail('');
     setRegisterPassword('');
     setShowRegister(false);
-    setTimeout(() => setAuthMessage(''), 3000);
+    // Navigate to browse page
+    setShowLanding(false);
+    setViewMode('home');
   };
 
   const handleLogout = () => {
