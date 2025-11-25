@@ -95,11 +95,38 @@ See **SUBMISSION.md** for complete requirement verification.
 Below are a couple of screenshots showing the app UI. Replace the placeholder images in `public/screenshots/` with real screenshots if you have them.
 
 - Hero / Landing view
+Below are screenshots showing the app UI. These use the images in `public/screenshots/`.
 
-![Hero Screenshot](public/screenshots/hero.png)
+- Hero / Landing view
+
+![Hero Screenshot](public/screenshots/hero.png.png)
 
 - Browse / Categories view
 
-![Browse Screenshot](public/screenshots/browse.png)
+![Browse Screenshot](public/screenshots/Browse.png.png)
+
+- Category detail view
+
+![Category Food](public/screenshots/categoryfood.png.png)
+
+- Search results
+
+![Search Food](public/screenshots/searchfood.png.png)
+
+- Search by area
+
+![Search by Area](public/screenshots/Searchfoodbyarea.png.png)
+
+- Recipe detail
+
+![Recipe Detail](public/screenshots/recipe.png.png)
+
+- Random / I'm Feeling Hungry
+
+![Random Recipe](public/screenshots/imhungryrandomrecipe.png.png)
+
+- Video / YouTube embed
+
+![YouTube](public/screenshots/youtube.png.png)
 
 **Status:** Ready for Submission ✅
