@@ -13,7 +13,7 @@ async function tryFetchJson(url, options) {
     const text = await res.text();
     if (!text) return null;
     return JSON.parse(text);
-  } catch (err) {
+  } catch {
     return null;
   }
 }

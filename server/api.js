@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* eslint-disable no-undef */
 // Simple Express API proxy for TheMealDB with in-memory LRU cache
 // Run: node server/api.js
 
@@ -43,62 +45,53 @@ async function initRedis() {
   }
 }
 
-function cacheKey(req) {
-  return `${req.path}?${req.originalUrl.split('?')[1] || ''}`;
-}
-
+// Fetch helper (uses redisClient if available and falls back to in-memory cache)
 async function fetchAndCache(key, url) {
-  // Try Redis first (if enabled)
-  try {
-    if (redisClient) {
-      try {
-        const raw = await redisClient.get(key);
-        if (raw) {
-          cacheHits += 1;
-          return JSON.parse(raw);
-        }
-      } catch (err) {
-        console.error('Redis get error', err);
-        // fall through to in-memory / fetch
+  // Try Redis first
+  if (redisClient) {
+    try {
+      const raw = await redisClient.get(key);
+      if (raw) {
+        cacheHits += 1;
+        return JSON.parse(raw);
       }
+    } catch (err) {
+      console.error('Redis get error', err);
+      // fall through to in-memory / fetch
     }
-
-    // Check in-memory cache
-    const cached = cache.get(key);
-    if (cached) {
-      cacheHits += 1;
-      return cached;
-    }
-
-    // Miss: fetch from upstream
-    cacheMisses += 1;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Upstream error ${res.status}`);
-    const data = await res.json();
-
-    // Store in-memory cache
-    cache.set(key, data);
-
-    // Also store in Redis if available (use TTL in seconds)
-    if (redisClient) {
-      try {
-        const ttlSeconds = Math.max(1, Math.floor(CACHE_TTL / 1000));
-        // prefer setEx if available
-        if (redisClient.setEx) {
-          await redisClient.setEx(key, ttlSeconds, JSON.stringify(data));
-        } else {
-          await redisClient.set(key, JSON.stringify(data), { EX: ttlSeconds });
-        }
-      } catch (err) {
-        console.error('Redis set error', err);
-      }
-    }
-
-    return data;
-  } catch (err) {
-    // Bubble up to caller
-    throw err;
   }
+
+  // Check in-memory cache
+  const cached = cache.get(key);
+  if (cached) {
+    cacheHits += 1;
+    return cached;
+  }
+
+  // Miss: fetch from upstream
+  cacheMisses += 1;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Upstream error ${res.status}`);
+  const data = await res.json();
+
+  // Store in-memory cache
+  cache.set(key, data);
+
+  // Also store in Redis if available (use TTL in seconds)
+  if (redisClient) {
+    try {
+      const ttlSeconds = Math.max(1, Math.floor(CACHE_TTL / 1000));
+      if (redisClient.setEx) {
+        await redisClient.setEx(key, ttlSeconds, JSON.stringify(data));
+      } else {
+        await redisClient.set(key, JSON.stringify(data), { EX: ttlSeconds });
+      }
+    } catch (err) {
+      console.error('Redis set error', err);
+    }
+  }
+
+  return data;
 }
 
 // Endpoints

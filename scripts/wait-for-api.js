@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* eslint-disable no-undef */
 const http = require('http');
 
 const host = process.env.API_HOST || 'localhost';
