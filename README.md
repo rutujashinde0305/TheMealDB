@@ -90,4 +90,16 @@ See **SUBMISSION.md** for complete requirement verification.
 
 ---
 
+## Screenshots
+
+Below are a couple of screenshots showing the app UI. Replace the placeholder images in `public/screenshots/` with real screenshots if you have them.
+
+- Hero / Landing view
+
+![Hero Screenshot](public/screenshots/hero.png)
+
+- Browse / Categories view
+
+![Browse Screenshot](public/screenshots/browse.png)
+
 **Status:** Ready for Submission ✅
